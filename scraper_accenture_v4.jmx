@@ -304,7 +304,7 @@ vars.putObject(&quot;joblist&quot;, joblist);
             <hashTree/>
             <JMESPathExtractor guiclass="JMESPathExtractorGui" testclass="JMESPathExtractor" testname="ids" enabled="true">
               <stringProp name="JMESExtractor.referenceName">ids</stringProp>
-              <stringProp name="JMESExtractor.jmesPathExpr">documents[*].id</stringProp>
+              <stringProp name="JMESExtractor.jmesPathExpr">documents[*].jobDetailUrl</stringProp>
               <stringProp name="JMESExtractor.matchNumber">-1</stringProp>
             </JMESPathExtractor>
             <hashTree/>
@@ -380,13 +380,17 @@ log.info(guid.toString());
 var k = vars.get(&quot;k&quot;);
 log.info(k.toString());
 var title = vars.get(&quot;titles_&quot; + k);
-def titlee = title.replaceAll(&apos; &apos;,&apos;\\+&apos;); //punem plusuri intre cuvintele din titlu pentru ca asa se compune url-ul
-log.info(titlee);
 var id = vars.get(&quot;ids_&quot;+k);
-var link =&quot;https://www.accenture.com/ro-en/careers/jobdetails?id=&quot;+id+&quot;&amp;title=&quot;+titlee+&quot;&quot;;
+id = id.split(&apos;/&apos;);
+var link = &quot;https://www.accenture.com/ro-en/careers/&quot;+id[5]+&quot;&quot;;
 log.info(link);
 var city = vars.get(&quot;cities_&quot;+k);
 city = city.replaceAll(&apos;Bucharest&apos;,&apos;București&apos;);
+city = city.replaceAll(&apos;Brasov&apos;,&apos;Brașov&apos;);
+city = city.replaceAll(&apos;Cluj Napoca&apos;,&apos;Cluj-Napoca&apos;);
+city = city.replaceAll(&apos;Iasi&apos;,&apos;Iași&apos;);
+city = city.replaceAll(&apos;Timisoara&apos;,&apos;Timișoara&apos;);
+city = city.replaceAll(&apos;Targu Mures&apos;,&apos;Târgu Mureș&apos;);
 log.info(city);
 var company = vars.get(&quot;company&quot;);
 String job=&apos;{&quot;id&quot;: &quot;&apos;+guid+&apos;&quot;,&quot;job_title&quot;: &quot;&apos;+title+&apos;&quot;,&quot;job_link&quot;: &quot;&apos;+link+&apos;&quot;, &quot;company&quot;: &quot;&apos;+company+&apos;&quot;,    &quot;country&quot;: &quot;România&quot;,&quot;city&quot;: &apos;+city+&apos; }&apos;;
